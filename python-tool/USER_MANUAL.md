@@ -25,6 +25,10 @@ Install dependency once:
   cd python-tool
   pip install -r requirements.txt
 
+Default data file on Windows:
+
+  %APPDATA%\qq-pet-macos\config-macos.json
+
 Use it after closing the desktop app:
 
   python cli.py status

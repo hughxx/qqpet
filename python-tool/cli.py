@@ -41,6 +41,7 @@ def find_store_path(custom_path: str = "") -> Path:
     if system == "Windows":
         appdata = os.environ.get("APPDATA", "")
         candidates = [
+            Path(appdata) / "qq-pet-macos" / "config-macos.json",
             Path(appdata) / "pet" / "config.json",
             Path(appdata) / "pet" / "configDev.json",
         ]
@@ -54,6 +55,7 @@ def find_store_path(custom_path: str = "") -> Path:
     else:
         home = Path.home()
         candidates = [
+            home / ".config" / "qq-pet-macos" / "config-macos.json",
             home / ".config" / "pet" / "config.json",
             home / ".config" / "pet" / "configDev.json",
         ]

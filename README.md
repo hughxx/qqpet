@@ -28,7 +28,7 @@ python cli.py status
 python cli.py set pet.info.yb 9999
 ```
 
-Close the desktop app before editing data, then reopen it.
+Default data file on Windows: `%APPDATA%\qq-pet-macos\config-macos.json`. Close the desktop app before editing data, then reopen it.
 
 ## Removed
 
