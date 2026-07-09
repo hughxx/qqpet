@@ -17,10 +17,10 @@ const DEFAULTS = {
 };
 
 const FALLBACK_TEXT = {
-  focusEye: "主人，眼睛已经盯屏 25 分钟啦，远眺一下吧~",
-  sedentary: "主人，坐了好久了，起来活动活动吧！",
-  lateNight: "主人，这么晚了，早点睡哦~",
-  welcomeBack: "主人回来啦~欢迎欢迎！",
+  focusEye: "Time to rest your eyes.",
+  sedentary: "Time to stand up and move.",
+  lateNight: "It is late. Consider getting some sleep.",
+  welcomeBack: "Welcome back.",
 };
 
 class FocusGuard {
@@ -141,47 +141,11 @@ class FocusGuard {
 
   _fireReminder(type, ctx) {
     this._markReminded(type);
-
-    const useLLM =
-      typeof llmService !== "undefined" &&
-      getSys("llmEnabled") &&
-      getSys("llmApiKey");
-
-    const showFallback = () => {
-      const txt = FALLBACK_TEXT[type] || "主人~";
-      openSpeak({
-        data: { type: "text", data: txt, submitText: "好的" },
-        nextActiveStr: "speak",
-      });
-    };
-
-    if (!useLLM) {
-      showFallback();
-      return;
-    }
-
-    let petInfo = {};
-    try {
-      petInfo = typeof getPetInfo === "function" ? getPetInfo() : {};
-    } catch (e) {}
-
-    llmService
-      .generateOnce(type, ctx, petInfo)
-      .then((r) => {
-        if (r?.tolk) {
-          openSpeak({
-            data: {
-              type: "text",
-              data: r.tolk,
-              submitText: r.submitText || "好的",
-            },
-            nextActiveStr: "speak",
-          });
-        } else {
-          showFallback();
-        }
-      })
-      .catch(() => showFallback());
+    const txt = FALLBACK_TEXT[type] || "OK~";
+    openSpeak({
+      data: { type: "text", data: txt, submitText: "OK" },
+      nextActiveStr: "speak",
+    });
   }
 }
 

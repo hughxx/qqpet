@@ -1,52 +1,34 @@
+# dependencies
+node_modules/
+qq-pet-macos/node_modules/
+
+# build outputs
+qq-pet-macos/dist/
+release/
+dist/
+build/
+*.exe
+*.zip
+*.7z
+*.dmg
+*.AppImage
+*.tar.gz
+
 # Python
 __pycache__/
 *.py[cod]
-*.egg-info/
 .venv/
-*.egg
-dist/
-/build/
+.env
+*.egg-info/
+.pytest_cache/
 
-# IDE
+# OS / editors
+.DS_Store
+Thumbs.db
 .idea/
 .vscode/
 *.swp
 *.swo
 
-# OS
-.DS_Store
-Thumbs.db
-
-# pytest
-.pytest_cache/
-
-# QQ宠物原始安装包和Electron运行时（太大，不提交）
-*.exe
-qq_pet_app/
-qq_pet_extracted/
-
-# asar 解包中的大型二进制
-qq_pet_asar/node_modules/
-qq_pet_asar/libs/
-qq_pet_asar/39f974bfc70b412d*
-qq_pet_asar/3affaca7977286de*
-qq_pet_asar/4a56bad37f1dbfc7*
-qq_pet_asar/4f0814ab1ed847b6*
-qq_pet_asar/580b5aa9814ed4ef*
-qq_pet_asar/5a4ac95c311c5c83*
-qq_pet_asar/85ee50120deeb07e*
-qq_pet_asar/87ecb39aa1987723*
-qq_pet_asar/8e131c6959f17882*
-qq_pet_asar/92898e67953ce51e*
-
-# macOS 移植版
-qq-pet-macos/node_modules/
-qq-pet-macos/dist/
-qq-pet-macos/build_*_Conflict/
-
-# 逆向分析报告
-新版QQ宠物*.md
-
-# 备份文件
+# local backups
 *.bak
-docs/

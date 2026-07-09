@@ -1,64 +1,12 @@
 const _require = eval("require");
 // 本机无法进行js与flash交互有安全机制问题， 通过开端口形式进行flash页面引入
 const createMain = (fn, post, ip, fileName, none) => {
-  if (none) {
-    fn(post, ip, fileName);
-    return;
-  }
-  const express = _require("express");
-  const app = express();
-  const path = _require("path");
-  app.get("/", function (req, res) {
-    // res.render('index');
-    res.send("this is the Homepage");
-  });
-  // fileName = 'u'
-  let pattt = path.join(__dirname, "../../src");
-  app.use("/" + fileName, express.static(pattt));
-  let aotuIp = getLocalIP();
-  var server = app.listen(post, ip || aotuIp[0], function () {
-    var host = server.address().address;
-    var port = server.address().port;
-    fn(port, host, fileName);
-    console.log("express at http://%s:%s/%s", host, port, fileName);
-  });
+  fn(post, ip, fileName);
 };
 
 let device = {};
 //本机websocket
-const openWS = (wsPopt) => {
-  let ws = _require("nodejs-websocket");
-  let server = ws.createServer(function (conn) {
-    conn.on("text", async function (data) {
-      // 接受客户端消息 并处理
-      //重写发送消息事件
-      conn.sendTextJson = (option) => {
-        try {
-          option = JSON.stringify(option);
-        } catch (error) {}
-        conn.sendText(option);
-      };
-      try {
-        data = JSON.parse(data);
-      } catch (e) {}
-      if (data.router == "joinDevice") {
-        device[data.name] = conn;
-      }
-      if (data.router == "setMsg") {
-        device[data.name].sendTextJson(data.data);
-      }
-    });
-    conn.on("close", function (code, reason) {
-      //code = 1001 reason= “”
-    });
-    conn.on("error", function (code, reason) {
-      //code= 报错信息，reason = undefined
-    });
-  });
-  server.listen(wsPopt, function () {
-    console.log("websocket：" + wsPopt);
-  });
-};
+const openWS = () => {};
 
 function getLocalIP(fn) {
   const os = _require("os");
@@ -228,35 +176,5 @@ let url = {
   fileName: "",
 };
 global.openLocalHost = (fn) => {
-  if (!fn) {
-    return;
-  }
-  if (url.host) {
-    fn(url);
-    return;
-  }
-  const express = _require("express");
-  const app = express();
-  const path = _require("path");
-  app.get("/", function (req, res) {
-    // res.render('index');
-    res.send("this is the Homepage");
-  });
-  let fileName = upDownArr(shuffleArr(fileNames)).join("");
-  // fileName = 'u'
-  let pattt = path.join(__dirname, "../../src");
-  app.use("/" + fileName, express.static(pattt));
-  let aotuIp = getLocalIP();
-  let post = "33385";
-  var server = app.listen(post, aotuIp[0], function () {
-    var host = server.address().address;
-    var port = server.address().port;
-    url = {
-      host: host,
-      port: port,
-      fileName: fileName,
-    };
-    fn(url);
-    console.log("express at http://%s:%s/%s", host, port, fileName);
-  });
+  if (fn) fn({ host: "", port: "", fileName: "" });
 };
