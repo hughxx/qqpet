@@ -13,7 +13,7 @@ process.on("uncaughtException", (err) => {
   if (err.code === "EPIPE" || err.message?.includes("EPIPE")) return;
 });
 
-const { app } = require("electron");
+const { app, session } = require("electron");
 const path = require("path");
 
 const gotTheLock = app.requestSingleInstanceLock();
@@ -71,7 +71,15 @@ const createWindow = async () => {
 // macOS: 不加载 PepFlash DLL（使用 Ruffle WASM 替代）
 app.commandLine.appendSwitch("disable-site-isolation-trials");
 app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
+app.commandLine.appendSwitch("disable-background-networking");
+app.commandLine.appendSwitch("disable-component-update");
+app.commandLine.appendSwitch("disable-domain-reliability");
+app.commandLine.appendSwitch("no-proxy-server");
 
 app.whenReady().then(() => {
+  session.defaultSession.webRequest.onBeforeRequest(
+    { urls: ["http://*/*", "https://*/*"] },
+    (_details, callback) => callback({ cancel: true })
+  );
   createWindow();
 });
