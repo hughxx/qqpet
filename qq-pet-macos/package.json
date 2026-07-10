@@ -1,6 +1,6 @@
 {
   "name": "qq-pet-macos",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "QQ Pet offline desktop app",
   "license": "SEE LICENSE IN ../LICENSE",
   "main": "main.js",
